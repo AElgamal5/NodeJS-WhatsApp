@@ -8,19 +8,12 @@ let whatsappClient = new Client({
 
 whatsappClient.initialize();
 
-function whatsappClientRecreate() {
-  console.log("Before recreating the client");
-  // whatsappClient = null;
-  // setTimeout(() => {
-  // whatsappClient = new Client({
-  //   authStrategy: new LocalAuth(),
-  // });
-  // whatsappClient.initialize();
-  // }, 1000);
+async function whatsappClientRecreate() {
+  console.log("REINITIALIZE whatsappClient ......");
 
-  whatsappClient.resetState();
+  await whatsappClient.initialize();
 
-  console.log("After recreating the client");
+  console.log("whatsappClient REINITIALIZED SUCCESSFULLY");
 }
 
 whatsappClient.on("qr", (qr) => {
@@ -33,9 +26,12 @@ whatsappClient.on("message", async (msg) => {
   try {
     if (msg.from != "status@broadcast") {
       const contact = await msg.getContact();
-      console.log("contact:", contact);
-      console.log("msg.from:", msg.from);
-      console.log("msg.body:", msg.body);
+      // console.log("contact:", contact);
+
+      console.log("MSG RECEIVED");
+      console.log("MSG FROM: ", msg.from);
+      console.log("MSG BODY: ", msg.body);
+      console.log("=======================");
     }
   } catch (error) {
     console.error(error);

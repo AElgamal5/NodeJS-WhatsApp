@@ -39,18 +39,13 @@ router.get("/status", async function (req, res) {
 
 router.get("/logout", async function (req, res) {
   try {
-    let status = await whatsappClient.getState();
-
+    const status = await whatsappClient.getState();
     if (!status) {
       return res.status(400).json({ errors: "You are not connected" });
     }
 
-    // await whatsappClient.destroy();
     await whatsappClient.logout();
-
-    // whatsappClientRecreate();
-
-    await whatsappClient.resetState();
+    await whatsappClientRecreate();
 
     res.json({ msg: "You logged out successfully" });
   } catch (error) {
